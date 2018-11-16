@@ -1,0 +1,8 @@
+li a {
+    text-decoration: underline;
+    text-decoration-style: double
+}
+
+body{
+    background: url('images/background.jpg') repeat; 
+}
