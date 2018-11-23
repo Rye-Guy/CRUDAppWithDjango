@@ -5,8 +5,8 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
+from .forms import PollQuestionPostForm
 from .models import Choice, Question
-
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -17,6 +17,18 @@ class IndexView(generic.ListView):
         return Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
+
+class CreatePollView(generic.CreateView):
+    model = Question
+    fields = [
+        'question_text',
+        'pub_date',
+    ]
+    template_name = 'polls/create.html'
+    success_url = '/polls'
+    
+# class CreateChoicesView(generic.CreateView):
+#     model = Choice 
 
 class DetailView(generic.DetailView):
     model = Question
