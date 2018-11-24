@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from polls.views import QuestionViewSet, GroupViewSet, UserViewSet
+
+
 
 urlpatterns = [
     path("polls/", include('polls.urls')),
     path('admin/', admin.site.urls),
+    path(r'api/', include('rest_framework.urls', namespace='rest_framework')),
+    path('apiview', QuestionViewSet.as_view({'get': 'list'}), name='api')
 ]

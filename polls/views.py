@@ -7,6 +7,14 @@ from django.utils import timezone
 
 from .forms import PollQuestionPostForm
 from .models import Choice, Question
+from rest_framework import viewsets
+
+from django.contrib.auth.models import User, Group
+from polls.serializers import QuestionSerializer, GroupSerializer, UserSerializer
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -53,3 +61,22 @@ def vote(request, question_id):
         selected_choice.save()
 
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
